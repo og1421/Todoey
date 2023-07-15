@@ -53,6 +53,7 @@ class ToDoListViewController: UITableViewController {
             // o que irá acontecer sempre que for clicado no + pra adicionar um item novo
             
             self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
         }
         alert.addTextField{ (alertTextField) in
             alertTextField.placeholder = "Create new items"
