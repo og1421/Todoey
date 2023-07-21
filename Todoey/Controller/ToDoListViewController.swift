@@ -13,6 +13,7 @@ class ToDoListViewController: UITableViewController {
     
     let defaults = UserDefaults.standard
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in:.userDomainMask).first?.appendingPathComponent("Items.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,8 @@ class ToDoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add item", style: .default) { (action ) in
             // o que irá acontecer sempre que for clicado no + pra adicionar um item novo
             
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            
             let newItem = Item()
             newItem.title = textField.text!
             
@@ -90,8 +93,7 @@ class ToDoListViewController: UITableViewController {
         let encoder = PropertyListEncoder()
         
         do{
-            let data = try encoder.encode(self.itemArray)
-            try data.write(to: self.dataFilePath!)
+            try context.save()
         } catch {
             print("Error encoding array: \(error)")
         }
