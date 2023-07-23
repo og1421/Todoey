@@ -40,14 +40,14 @@ class ToDoListViewController: UITableViewController {
         
         override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell", for: indexPath)
             
             let item = itemArray[indexPath.row]
             
             cell.textLabel?.text = item.title
             
             //Ternary operator ==>
-            // value = condition ? valueIfTrue : valueIfFalse
+//             value = condition ? valueIfTrue : valueIfFalse
             
             cell.accessoryType = item.done ? .checkmark : .none
             
@@ -117,16 +117,9 @@ class ToDoListViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-        func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-            
-//            let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+//        func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
 //
-//            if let addtionalPredicate = predicate {
-//                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, addtionalPredicate])
-//            } else {
-//                request.predicate = categoryPredicate
-//            }
-//
+//            let request: NSFetchRequest<Item> = Item.fetchRequest()
 //
 //            do {
 //                itemArray = try context.fetch(request)
@@ -134,9 +127,9 @@ class ToDoListViewController: UITableViewController {
 //                print("Error fetching data from context \(error)")
 //            }
 //
-//            tableView.reloadData()
-            
-        }
+//            self.tableView.reloadData()
+//
+//        }
     
 //    func loadItems() {
 //        let request : NSFetchRequest<Item> = Item.fetchRequest()
