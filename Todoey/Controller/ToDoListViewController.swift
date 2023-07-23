@@ -29,7 +29,7 @@ class ToDoListViewController: UITableViewController {
 //        newItem3.title = "Teste3"
 //        itemArray.append(newItem3)
         
-//        loadItems()
+        loadItems()
     }
     
     //MARK: - Tableview Datasource Methods
@@ -131,14 +131,14 @@ class ToDoListViewController: UITableViewController {
 //
 //        }
     
-//    func loadItems() {
-//        let request : NSFetchRequest<Item> = Item.fetchRequest()
-//        do{
-//           itemArray =  try context.fetch(request)
-//        } catch {
-//            print("Error fetching data from context \(error)")
-//        }
-//    }
+    func loadItems() {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do{
+           itemArray =  try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
     
     
 }
