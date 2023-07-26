@@ -28,7 +28,7 @@ class CategoryTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         let item = itemCategory[indexPath.row]
         
-        cell.textLabel?.text = itemCategory[indexPath.row].name
+        cell.textLabel?.text = item.name
         
         
         return cell
@@ -42,6 +42,10 @@ class CategoryTableViewController: UITableViewController {
     }
     
     //MARK: - TableView Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("was selected an item")
+    }
     
     
 }
