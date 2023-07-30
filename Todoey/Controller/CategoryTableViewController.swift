@@ -28,9 +28,8 @@ class CategoryTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        let item = itemCategory[indexPath.row]
         
-        cell.textLabel?.text = item.name
+        cell.textLabel?.text = itemCategory[indexPath.row].name
         
         
         return cell
@@ -65,7 +64,7 @@ class CategoryTableViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add new Category ", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
             let newCategory = Categoria(context: self.context)
             
             newCategory.name = textField.text!
@@ -73,15 +72,17 @@ class CategoryTableViewController: UITableViewController {
             self.itemCategory.append(newCategory)
             
             self.saveItems()
-        }
-        
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new category"
-            textField = alertTextField
             
+            self.tableView.reloadData()
         }
         
         alert.addAction(action)
+        
+        alert.addTextField { (field) in
+            field.placeholder = "Create new category"
+            textField = field
+            
+        }
         
         present(alert, animated: true, completion: nil)
         
