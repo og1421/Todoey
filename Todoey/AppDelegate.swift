@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        let data = Data()
+        data.name = "Orlando"
+        data.age = 17
+        
+        do{
+            let realm = try Realm()
+            try realm.write {
+                realm.add(data)
+            }
+        } catch {
+            print("Error initializing realm: \(error)")
+        }
         
         return true
     }
@@ -29,13 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     lazy var persistentContainer: NSPersistentContainer = {
 
-        let container = NSPersistentContainer(name: "CoreDataModel")
+        // Adicione esse código ao criar a instância do NSPersistentContainer
+        let container = NSPersistentContainer(name: "CoreDataModel2")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                // Tratar o erro ao carregar o armazenamento persistente aqui
+                fatalError("Erro ao carregar o armazenamento persistente: \(error), \(error.userInfo)")
             }
         })
+
         return container
     }()
     

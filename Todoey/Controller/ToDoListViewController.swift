@@ -111,7 +111,7 @@ class ToDoListViewController: UITableViewController {
     func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
 //        let request : NSFetchRequest<Item> = Item.fetchRequest()
         
-        let categoryPredicate = NSPredicate(format: "parentCategory.name MATHES %@", selectedCategory!.name!)
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
         
         if let additionalPredicate = predicate {
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
