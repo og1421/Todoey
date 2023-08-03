@@ -6,18 +6,19 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryTableViewController: UITableViewController {
+    let realm = try! Realm()
     
-    var itemCategory = [Categoria]()
+    var itemCategory = [Category]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadItems()
+        load()
 
     }
         
@@ -39,25 +40,27 @@ class CategoryTableViewController: UITableViewController {
     }
     
     //MARK: - Data Manipulation Methods
-    func saveItems() {
+    func save(_ category: Category) {
         do {
-            try context.save()
+            try realm.write{
+                realm.add(category)
+            }
         } catch {
             print("Error saving context: \(error)")
-            self.tableView.reloadData()
         }
+        self.tableView.reloadData()
     }
     
-    func loadItems(with request: NSFetchRequest<Categoria> = Categoria.fetchRequest()) {
+    func load() {
         
-        
-        do {
-            itemCategory = try context.fetch(request)
-        } catch {
-            print("error fetching data from context: \(error)")
-        }
-        
-        tableView.reloadData()
+//
+//        do {
+//            itemCategory = try context.fetch(request)
+//        } catch {
+//            print("error fetching data from context: \(error)")
+//        }
+//
+//        tableView.reloadData()
     }
     
     //MARK: - Add new Categories
@@ -67,15 +70,13 @@ class CategoryTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Add new Category ", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            let newCategory = Categoria(context: self.context)
+            let newCategory = Category()
             
             newCategory.name = textField.text!
             
             self.itemCategory.append(newCategory)
             
-            self.saveItems()
-            
-            self.tableView.reloadData()
+            self.save(newCategory)
         }
         
         alert.addAction(action)
@@ -101,7 +102,7 @@ class CategoryTableViewController: UITableViewController {
         let destinationVC  = segue.destination as! ToDoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = itemCategory[indexPath.row]
+//            destinationVC.selectedCategory = itemCategory[indexPath.row]
             print("teste")
         }
     }

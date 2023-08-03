@@ -19,15 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        let data = Data()
-        data.name = "Orlando"
-        data.age = 17
-        
         do{
             let realm = try Realm()
-            try realm.write {
-                realm.add(data)
-            }
+            
         } catch {
             print("Error initializing realm: \(error)")
         }
@@ -38,11 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
 
-        self.saveContext()
+//        self.saveContext()
     }
     
     // MARK: - Core Data stack
-    
+
     lazy var persistentContainer: NSPersistentContainer = {
 
         // Adicione esse código ao criar a instância do NSPersistentContainer
@@ -56,9 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return container
     }()
-    
+
     // MARK: - Core Data Saving support
-    
+
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
