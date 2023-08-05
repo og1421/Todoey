@@ -11,7 +11,9 @@ import RealmSwift
 class CategoryTableViewController: UITableViewController {
     let realm = try! Realm()
     
-    var itemCategory = [Category]()
+    var categories: Results<Category>?
+    
+//    var itemCategory = [Category]()
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -24,15 +26,15 @@ class CategoryTableViewController: UITableViewController {
         
     //MARK: - Table View Datasource methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemCategory.count
+        return categories?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let item = itemCategory[indexPath.row]
+        let item = categories?[indexPath.row].name ?? "No Categories added yet"
         
-        cell.textLabel?.text = item.name
+        cell.textLabel?.text = item
         self.tableView.reloadData()
         
         return cell
@@ -52,15 +54,9 @@ class CategoryTableViewController: UITableViewController {
     }
     
     func load() {
+        categories = realm.objects(Category.self)
         
-//
-//        do {
-//            itemCategory = try context.fetch(request)
-//        } catch {
-//            print("error fetching data from context: \(error)")
-//        }
-//
-//        tableView.reloadData()
+        tableView.reloadData()
     }
     
     //MARK: - Add new Categories
@@ -73,8 +69,6 @@ class CategoryTableViewController: UITableViewController {
             let newCategory = Category()
             
             newCategory.name = textField.text!
-            
-            self.itemCategory.append(newCategory)
             
             self.save(newCategory)
         }
