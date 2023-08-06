@@ -12,16 +12,11 @@ class CategoryTableViewController: UITableViewController {
     let realm = try! Realm()
     
     var categories: Results<Category>?
-    
-//    var itemCategory = [Category]()
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         load()
-
     }
         
     //MARK: - Table View Datasource methods
@@ -32,14 +27,11 @@ class CategoryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let item = categories?[indexPath.row].name ?? "No Categories added yet"
-        
-        cell.textLabel?.text = item
-        self.tableView.reloadData()
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories added yet"
         
         return cell
-        
     }
+
     
     //MARK: - Data Manipulation Methods
     func save(_ category: Category) {
@@ -50,7 +42,7 @@ class CategoryTableViewController: UITableViewController {
         } catch {
             print("Error saving context: \(error)")
         }
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     func load() {
@@ -67,37 +59,30 @@ class CategoryTableViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             let newCategory = Category()
-            
             newCategory.name = textField.text!
-            
             self.save(newCategory)
         }
         
         alert.addAction(action)
-        
         alert.addTextField { (field) in
             field.placeholder = "Create new category"
             textField = field
             
         }
-        
         present(alert, animated: true, completion: nil)
-        
     }
     
     //MARK: - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItems", sender: self)
-        
-        
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC  = segue.destination as! ToDoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-//            destinationVC.selectedCategory = itemCategory[indexPath.row]
-            print("teste")
+            destinationVC.selectedCategory = categories?[indexPath.row]
+            
         }
     }
     
