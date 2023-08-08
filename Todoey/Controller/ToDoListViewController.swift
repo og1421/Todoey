@@ -8,6 +8,7 @@
 import UIKit
 import RealmSwift
 
+
 class ToDoListViewController: UITableViewController {
     
     var todoItems: Results<Item>?
@@ -43,7 +44,7 @@ class ToDoListViewController: UITableViewController {
             } else {
                 cell.textLabel?.text = "No Items Added"
             }
-            
+        
             return cell
         }
         
@@ -125,4 +126,5 @@ extension ToDoListViewController: UISearchBarDelegate {
         }
     }
 }
+
 
